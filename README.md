@@ -1,4 +1,5 @@
-## 小程序原生和mpvue代码共存
+
+## mpvue-native:小程序原生和mpvue代码共存
 
 **问题描述**
 
@@ -13,12 +14,12 @@
 
 2. 公共样式 字体图标迁移 app.wxss -> app.vue中less（mpvue的公共样式）
 
-3. 旧项目导入 旧项目old-project拷贝到dist打包的根目录
+3. 旧项目导入 旧项目(native)拷贝到dist打包的根目录
 
 > 这个要注意的就是拷贝的旧项目不能覆盖mpvue打包文件，只要避免文件夹名字冲突即可
 
 
-## 使用
+## mpvue-native使用
 
 ```
 yarn dev xiejun // 本地启动
@@ -26,6 +27,9 @@ yarn build xiejun // 打包
 ```
 开发者工具指向目录
 `/dist/xiejun`
+
+> github地址： https://github.com/xiejun-net/mpvue-native
+
 
 ## mpvue-native目录结构
 
@@ -69,6 +73,13 @@ yarn build xiejun // 打包
     }
 ]),
 ```
+**入口及页面**
+```
+const appEntry = { app: resolve(`./src/${config.projectName}/main.js`) } // 各个项目入口文件
+const pagesEntry = getEntry(resolve('./src'), 'pages/**/main.js') // 各个项目的公共页面
+const projectEntry = getEntry(resolve('./src'), `${config.projectName}/**/main.js`) // 某个项目的mpvue页面
+const entry = Object.assign({}, appEntry, pagesEntry, projectEntry)
+```
 
 ## 多项目共用页面
 
@@ -105,24 +116,24 @@ yarn build xiejun // 打包
 ```
 
 
-# 其他有关小程序开发坑和技巧
+## 其他有关小程序开发坑和技巧
 
-## 字体图标的使用
+### 字体图标的使用
 
 > 网页我们直接引用css就好`//at.alicdn.com/t/font_263892_1oe6c1cnjiofxbt9.css`
 
 小程序只需要新建一个css文件把在线的css代码拷贝过来放置全局即可
 
-![image](https://shanhs.oss-cn-shenzhen.aliyuncs.com/newboss/2018-10-07/cd21dc5d-2b2d-46a0-9239-56975539e3d7.png)
+![image](https://user-gold-cdn.xitu.io/2018/10/7/1664ef9e04df7402?w=1124&h=600&f=png&s=27109)
 
-## 关于小程序和mpvue生命周期
+### 关于小程序和mpvue生命周期
 
 [点此查看mpvue的生命周期](http://mpvue.com/mpvue/#_5)
 
 从官方文档上生命周期的图示上可以看到created是在onLaunch之前，也就是说每个页面的created 出发时机都是整个应用开启的时机，所以一般页面里面都是用`mouted` 来请求数据的。
 
 
-## 如何判断小程序当前环境
+### 如何判断小程序当前环境
 
 **问题描述**
 
@@ -166,7 +177,7 @@ async getEnv() {
     }
 }
 ```
-## Promise
+### Promise
 
 官方文档上说Promise 都支持
 
@@ -178,7 +189,7 @@ import Es6Promise from 'es6-promise'
 Es6Promise.polyfill()
 ```
 
-## wx.navigateto返回层级问题
+### wx.navigateto返回层级问题
 
 官方文档是说目前可以返回10层
 
@@ -186,8 +197,16 @@ Es6Promise.polyfill()
 
 所以最好使用wx.navigateto跳转不超过5层
 
-## 压缩兼容问题
+### 压缩兼容问题
 
 在微信开发者工具上传代码的时候 
 
 务必把项目ES6转ES5否则会出现兼问题
+
+
+
+
+> 个人公众号:程序员很忙（xiejun_asp）
+
+
+![](https://user-gold-cdn.xitu.io/2018/10/7/1664efe7c72884c7?w=260&h=258&f=jpeg&s=20444)
