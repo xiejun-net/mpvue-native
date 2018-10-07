@@ -41,7 +41,26 @@
 
 ## 分包
 
-
+```js
+// app.json文件配置 pages 为主包
+  "pages": [
+    "test/web"
+  ],
+  "subPackages": [
+    {
+      "root": "pages",
+      "pages": [
+        "about/main"
+      ]
+    },
+    { 
+      "root": "xiejun", 
+      "pages": [
+          "home/main"
+        ]
+    }
+  ],
+```
 
 
 
