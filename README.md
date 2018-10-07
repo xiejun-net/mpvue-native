@@ -1,4 +1,4 @@
-## 原生和mpvue代码共存
+## 小程序原生和mpvue代码共存
 
 **问题描述**
 
@@ -16,7 +16,18 @@
 3. 旧项目导入 旧项目old-project拷贝到dist打包的根目录
 
 > 这个要注意的就是拷贝的旧项目不能覆盖mpvue打包文件，只要避免文件夹名字冲突即可
-## 目录结构
+
+
+## 使用
+
+```
+yarn dev xiejun // 本地启动
+yarn build xiejun // 打包
+```
+开发者工具指向目录
+`/dist/xiejun`
+
+## mpvue-native目录结构
 
 ```bash
 |----build
@@ -51,12 +62,12 @@
 
 ```
  new CopyWebpackPlugin([
-   {
-     from: path.resolve(__dirname, `../old-${config.projectName}`),
-     to: '',
-     ignore: ['.*']
-   }
- ]),
+    {
+    from: path.resolve(__dirname, `../src/${config.projectName}/native`),
+    to: "",
+    ignore: [".*"]
+    }
+]),
 ```
 
 ## 多项目共用页面
@@ -67,6 +78,10 @@
 
 
 ## 分包
+
+旧项目作为主包
+其他根据文件夹 pages xiejun 分包作为两个包加载
+具体根据实际情况来分
 
 ```js
 // app.json文件配置 pages 为主包
@@ -90,9 +105,7 @@
 ```
 
 
-
-
-
+# 其他有关小程序开发坑和技巧
 
 ## 字体图标的使用
 
@@ -102,16 +115,11 @@
 
 ![image](https://shanhs.oss-cn-shenzhen.aliyuncs.com/newboss/2018-10-07/cd21dc5d-2b2d-46a0-9239-56975539e3d7.png)
 
-
-
-
 ## 关于小程序和mpvue生命周期
 
 [点此查看mpvue的生命周期](http://mpvue.com/mpvue/#_5)
 
 从官方文档上生命周期的图示上可以看到created是在onLaunch之前，也就是说每个页面的created 出发时机都是整个应用开启的时机，所以一般页面里面都是用`mouted` 来请求数据的。
-
-
 
 
 ## 如何判断小程序当前环境
@@ -158,5 +166,28 @@ async getEnv() {
     }
 }
 ```
+## Promise
 
+官方文档上说Promise 都支持
 
+实际测试发现其实在ios8上是有问题的
+
+所以request.js
+```
+import Es6Promise from 'es6-promise'
+Es6Promise.polyfill()
+```
+
+## wx.navigateto返回层级问题
+
+官方文档是说目前可以返回10层
+
+实际情况是在某些机型上只能返回5层 和原来一样
+
+所以最好使用wx.navigateto跳转不超过5层
+
+## 压缩兼容问题
+
+在微信开发者工具上传代码的时候 
+
+务必把项目ES6转ES5否则会出现兼问题
