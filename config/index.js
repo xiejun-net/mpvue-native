@@ -5,7 +5,6 @@ var projectName = commond.projectName
 
 module.exports = {
   projectName: projectName,
-  apiHost: 'https://test.m.shanhs.com.cn/sapi',
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, `../dist/${projectName}/index.html`),

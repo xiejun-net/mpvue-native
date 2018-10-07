@@ -1,15 +1,12 @@
-# mpvue框架及与小程序原生的混搭开发
-
-
 ## 原生和mpvue代码共存
 
 **问题描述**
 
 > mpvue和wepy等框架是在小程序出来一段时间之后才开始有的，所以会出现的问题有：
 
-* 兼容已有的项目
-* 平滑的迁移旧的项目
-* 有些场景对小程序的兼容要求特别高的时候需要用原生的方式开发
+1. 兼容已有的项目
+2. 平滑的迁移旧的项目
+3. 有些场景对小程序的兼容要求特别高的时候需要用原生的方式开发
 
 **解决思路**
 1. mpvue的入口文件导入旧版路由配置文件
@@ -19,6 +16,36 @@
 3. 旧项目导入 旧项目old-project拷贝到dist打包的根目录
 
 > 这个要注意的就是拷贝的旧项目不能覆盖mpvue打包文件，只要避免文件夹名字冲突即可
+## 目录结构
+
+```bash
+|----build
+|----config
+|----dist 打包后项目目录
+    |----<projetc1>
+    |----<projetc2>
+|----src 源码
+    |----assets 通用资源目录
+    |----components 组件
+    |----pages 公共页面页面
+    |----utils 常用库
+    |----<project> 对应单个项目的文件
+        |----home mpvue页面
+            |----assets
+            |----App.vue
+            |----main.js
+        |----native 原生目录
+            |----test 小程序原生页面
+                |---web.js
+                |---web.wxml
+                |---web.wxss
+                |---web.json
+        |----app.json 路径、分包
+        |----App.vue
+        |----main.js mpvue项目入口文件
+|----static 静态文件
+|----package.json
+```
 
 **拷贝旧项目到根目录下**
 
@@ -132,25 +159,4 @@ async getEnv() {
 }
 ```
 
-## 目录结构
 
-```bash
-|----build 
-|----config 
-|----old-<project> 旧项目地址
-    |----service
-    |----util
-    |----pages
-|----src 源码
-    |----assets 通用资源目录
-    |----components 组件
-    |----pages 通用页面
-    |----<project> 对应单个项目的文件
-    |----project 项目入口
-        |----<project> 项目
-            |----assets
-            |----App.vue
-            |----main.js
-|----static
-|----package.json
-```

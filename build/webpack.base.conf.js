@@ -115,7 +115,10 @@ module.exports = {
     new CopyWebpackPlugin(
       [
         {
-          from: path.resolve(__dirname, `../src/${config.projectName}/app.json`),
+          from: path.resolve(
+            __dirname,
+            `../src/${config.projectName}/app.json`
+          ),
           to: ""
         }
       ],
@@ -123,6 +126,13 @@ module.exports = {
         context: `src/`
       }
     ),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, `../src/${config.projectName}/native`),
+        to: "",
+        ignore: [".*"]
+      }
+    ]),
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, "../static"),

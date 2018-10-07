@@ -67,14 +67,6 @@ module.exports = merge(baseWebpackConfig, {
       name: 'common/manifest',
       chunks: ['common/vendor']
     }),
-    // copy custom statics assets
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, `../src/${config.projectName}/native`),
-        to: '',
-        ignore: ['.*']
-      }
-    ]),
     // new CopyWebpackPlugin([
     //   {
     //     from: path.resolve(__dirname, '../static'),
