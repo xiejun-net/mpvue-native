@@ -1,0 +1,6 @@
+build/*.js
+config/*.js
+src/utils/*.js
+old-touch/
+old-offline/
+dist/
